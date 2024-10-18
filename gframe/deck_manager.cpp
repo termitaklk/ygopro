@@ -44,6 +44,10 @@ void DeckManager::LoadLFListSingle(const char* path) {
 				continue;
 			if (cur == _lfList.rend())
 				continue;
+
+			// Agregamos un console log para mostrar el código y la cantidad procesados
+			std::cout << "Procesando cardId: " << code << " con cantidad: " << count << std::endl;
+
 			unsigned int hcode = code;
 			cur->content[code] = count;
 			cur->hash = cur->hash ^ ((hcode << 18) | (hcode >> 14)) ^ ((hcode << (27 + count)) | (hcode >> (5 - count)));
