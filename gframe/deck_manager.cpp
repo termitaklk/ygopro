@@ -171,6 +171,7 @@ int DeckManager::CheckDeck(Deck& deck, int lfhash, int rule) {
 	return 0;
 }
 int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_packlist) {
+	std::cerr << "El deck es invalido" << std::endl;
 	deck.clear();
 	int code;
 	int errorcode = 0;
