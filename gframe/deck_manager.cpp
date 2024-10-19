@@ -180,22 +180,27 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_p
 		code = dbuf[i];
 		std::cerr << "errores: " << code << " errocode: " << errorcode << std::endl;
 		if(!dataManager.GetData(code, &cd)) {
+			std::cerr << "Llegue 1" << std::endl;
 			errorcode = code;
 			continue;
 		}
 		if (cd.type & TYPE_TOKEN) {
+			std::cerr << "Llegue 2" << std::endl;
 			errorcode = code;
 			continue;
 		}
 		if(is_packlist) {
+			std::cerr << "Llegue 3" << std::endl;
 			deck.main.push_back(dataManager.GetCodePointer(code));
 			continue;
 		}
 		if (cd.type & TYPES_EXTRA_DECK) {
+			std::cerr << "Llegue 4" << std::endl;
 			if ((int)deck.extra.size() < EXTRA_MAX_SIZE)
 				deck.extra.push_back(dataManager.GetCodePointer(code));
 		}
 		else {
+			std::cerr << "Llegue 5" << std::endl;
 			if ((int)deck.main.size() < DECK_MAX_SIZE)
 				deck.main.push_back(dataManager.GetCodePointer(code));
 		}
@@ -203,16 +208,20 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_p
 		 //std::cerr << "errores: " << code << " errocode: " << errorcode << std::endl;
 	}
 	for(int i = 0; i < sidec; ++i) {
+		std::cerr << "Llegue 6" << std::endl;
 		code = dbuf[mainc + i];
 		if(!dataManager.GetData(code, &cd)) {
+			std::cerr << "Llegue 7" << std::endl;
 			errorcode = code;
 			continue;
 		}
 		if (cd.type & TYPE_TOKEN) {
+			std::cerr << "Llegue 8" << std::endl;
 			errorcode = code;
 			continue;
 		}
 		if(deck.side.size() < SIDE_MAX_SIZE)
+		std::cerr << "Llegue 9" << std::endl;
 			deck.side.push_back(dataManager.GetCodePointer(code));
 	}
 	return errorcode;
@@ -222,7 +231,6 @@ int DeckManager::LoadDeck(Deck& deck, std::istringstream& deckStream, bool is_pa
 	int cardlist[300]{};
 	bool is_side = false;
 	std::string linebuf;
-	std::cerr << "Llegue aqui2" << std::endl;
 	while (std::getline(deckStream, linebuf, '\n') && ct < (int)(sizeof cardlist / sizeof cardlist[0])) {
 		if (linebuf[0] == '!') {
 			is_side = true;
