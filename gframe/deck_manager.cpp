@@ -177,6 +177,7 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_p
 	deck.clear();
 	int code;
 	int errorcode = 0;
+	std::cerr << "Llegue aqui" << std::endl;
 	CardData cd;
 	for(int i = 0; i < mainc; ++i) {
 		code = dbuf[i];
@@ -221,6 +222,7 @@ int DeckManager::LoadDeck(Deck& deck, std::istringstream& deckStream, bool is_pa
 	int cardlist[300]{};
 	bool is_side = false;
 	std::string linebuf;
+	std::cerr << "Llegue aqui2" << std::endl;
 	while (std::getline(deckStream, linebuf, '\n') && ct < (int)(sizeof cardlist / sizeof cardlist[0])) {
 		if (linebuf[0] == '!') {
 			is_side = true;
@@ -240,6 +242,7 @@ int DeckManager::LoadDeck(Deck& deck, std::istringstream& deckStream, bool is_pa
 bool DeckManager::LoadSide(Deck& deck, int* dbuf, int mainc, int sidec) {
 	std::unordered_map<int, int> pcount;
 	std::unordered_map<int, int> ncount;
+	std::cerr << "Llegue aqui3" << std::endl;
 	for(size_t i = 0; i < deck.main.size(); ++i)
 		++pcount[deck.main[i]->first];
 	for(size_t i = 0; i < deck.extra.size(); ++i)
@@ -290,6 +293,7 @@ void DeckManager::GetDeckFile(wchar_t* ret, irr::gui::IGUIComboBox* cbCategory, 
 	wchar_t filepath[256];
 	wchar_t catepath[256];
 	const wchar_t* deckname = cbDeck->getItem(cbDeck->getSelected());
+	std::cerr << "Llegue aqui4" << std::endl;
 	if(deckname != NULL) {
 		GetCategoryPath(catepath, cbCategory->getSelected(), cbCategory->getText());
 		myswprintf(filepath, L"%ls/%ls.ydk", catepath, deckname);
