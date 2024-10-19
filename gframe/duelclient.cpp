@@ -284,45 +284,56 @@ void DuelClient::HandleSTOCPacketLan(unsigned char* data, int len) {
 			switch(flag)
 			{
 			case DECKERROR_LFLIST: {
+				std::cerr << "Error: LFLIST" << std::endl;
 				myswprintf(msgbuf, dataManager.GetSysString(1407), dataManager.GetName(code));
 				break;
 			}
 			case DECKERROR_OCGONLY: {
+				std::cerr << "Error: OCG" << std::endl;
 				myswprintf(msgbuf, dataManager.GetSysString(1413), dataManager.GetName(code));
 				break;
 			}
 			case DECKERROR_TCGONLY: {
+				std::cerr << "Error: TCG" << std::endl;
 				myswprintf(msgbuf, dataManager.GetSysString(1414), dataManager.GetName(code));
 				break;
 			}
 			case DECKERROR_UNKNOWNCARD: {
+				std::cerr << "Error: UNK" << std::endl;
 				myswprintf(msgbuf, dataManager.GetSysString(1415), dataManager.GetName(code), code);
 				break;
 			}
 			case DECKERROR_CARDCOUNT: {
+				std::cerr << "Error: COUNT" << std::endl;
 				myswprintf(msgbuf, dataManager.GetSysString(1416), dataManager.GetName(code));
 				break;
 			}
 			case DECKERROR_MAINCOUNT: {
+				std::cerr << "Error: MCOUNT" << std::endl;
 				myswprintf(msgbuf, dataManager.GetSysString(1417), code);
 				break;
 			}
 			case DECKERROR_EXTRACOUNT: {
 				if(code>0)
+				    std::cerr << "Error: 1" << std::endl;
 					myswprintf(msgbuf, dataManager.GetSysString(1418), code);
 				else
+				    std::cerr << "Error: 2" << std::endl;
 					myswprintf(msgbuf, dataManager.GetSysString(1420));
 				break;
 			}
 			case DECKERROR_SIDECOUNT: {
+				std::cerr << "Error: 3" << std::endl;
 				myswprintf(msgbuf, dataManager.GetSysString(1419), code);
 				break;
 			}
 			case DECKERROR_NOTAVAIL: {
+				std::cerr << "Error: 4" << std::endl;
 				myswprintf(msgbuf, dataManager.GetSysString(1432), dataManager.GetName(code));
 				break;
 			}
 			default: {
+				std::cerr << "Error: DEFAULD" << std::endl;
 				myswprintf(msgbuf, dataManager.GetSysString(1406));
 				break;
 			}

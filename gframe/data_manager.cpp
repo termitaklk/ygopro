@@ -284,9 +284,11 @@ const wchar_t* DataManager::GetDesc(unsigned int strCode) {
 }
 const wchar_t* DataManager::GetSysString(int code) {
 	if (code < 0 || code > MAX_STRING_ID)
+	    std::cerr << "Procesando: " << code << " Maximo: " << MAX_STRING_ID << std::endl;
 		return unknown_string;
 	auto csit = _sysStrings.find(code);
 	if(csit == _sysStrings.end())
+	    std::cerr << "Procesando1: " << code << " Maximo1: " << MAX_STRING_ID << std::endl;
 		return unknown_string;
 	return csit->second.c_str();
 }
