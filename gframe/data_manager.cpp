@@ -223,18 +223,7 @@ bool DataManager::GetData(unsigned int code, CardData* pData) {
 	std::cerr << "No se encontró el código: " << code << std::endl;
 		return false;
 	auto& data = cdit->second;
-        // Imprimir el código de la carta
-        std::cerr << "Código de la carta (cd.code): " << cd.code << std::endl;
-        
-        // Imprimir OT de la carta
-        std::cerr << "OT (cd.ot): " << cd.ot << std::endl;
-        
-        // Imprimir alias de la carta
-        std::cerr << "Alias (cd.alias): " << cd.alias << std::endl;
-        
-        // Separador para cada entrada
-        std::cerr << "---------------------------------------------" << std::endl;
-		
+	std::cerr << "No se encontró el código123: " << data << std::endl;
 	if (pData) {
 		pData->code = data.code;
 		pData->alias = data.alias;
