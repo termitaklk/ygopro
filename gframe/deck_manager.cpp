@@ -178,17 +178,14 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_p
 	int code;
 	int errorcode = 0;
 	std::cerr << "Llegue aqui" << std::endl;
-	std::cerr << "Procesando1 cardId: " << code << " con cantidad1: " << count << std::endl;
 	CardData cd;
 	for(int i = 0; i < mainc; ++i) {
 		code = dbuf[i];
 		if(!dataManager.GetData(code, &cd)) {
-			std::cerr << "Error 1 " << code << " Error 1 " << std::endl;
 			errorcode = code;
 			continue;
 		}
 		if (cd.type & TYPE_TOKEN) {
-			std::cerr << "Error 1 " << code << " Error 1 " << std::endl;
 			errorcode = code;
 			continue;
 		}
@@ -204,6 +201,8 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_p
 			if ((int)deck.main.size() < DECK_MAX_SIZE)
 				deck.main.push_back(dataManager.GetCodePointer(code));
 		}
+
+		 std::cerr << "errores: " << code << " errocode: " << errorcode << std::endl;
 	}
 	for(int i = 0; i < sidec; ++i) {
 		code = dbuf[mainc + i];
