@@ -18,25 +18,6 @@ DataManager::DataManager() : _datas(16384), _strings(16384) {
 	strings_end = _strings.end();
 	extra_setcode = { {8512558u, {0x8f, 0x54, 0x59, 0x82, 0x13a}}, };
 }
-
-void DataManager::PrintLoadedData() const {
-    for (const auto& entry : _datas) {
-        const CardDataC& cd = entry.second;
-        
-        // Imprimir el código de la carta
-        std::cerr << "Código de la carta (cd.code): " << cd.code << std::endl;
-        
-        // Imprimir OT de la carta
-        std::cerr << "OT (cd.ot): " << cd.ot << std::endl;
-        
-        // Imprimir alias de la carta
-        std::cerr << "Alias (cd.alias): " << cd.alias << std::endl;
-        
-        // Separador para cada entrada
-        std::cerr << "---------------------------------------------" << std::endl;
-    }
-}
-
 bool DataManager::LoadDB(const wchar_t* wfile) {
 	char file[256];
 	BufferIO::EncodeUTF8(wfile, file);
@@ -242,8 +223,6 @@ bool DataManager::GetData(unsigned int code, CardData* pData) {
 	std::cerr << "No se encontró el código: " << code << std::endl;
 		return false;
 	auto& data = cdit->second;
-	const CardDataC& cd = entry.second;
-        
         // Imprimir el código de la carta
         std::cerr << "Código de la carta (cd.code): " << cd.code << std::endl;
         
@@ -255,6 +234,7 @@ bool DataManager::GetData(unsigned int code, CardData* pData) {
         
         // Separador para cada entrada
         std::cerr << "---------------------------------------------" << std::endl;
+		
 	if (pData) {
 		pData->code = data.code;
 		pData->alias = data.alias;
