@@ -38,7 +38,7 @@ void DeckManager::LoadLFListSingle(const char* path) {
 			int count = -1;
 			if (sscanf(linebuf, "%d %d", &code, &count) != 2)
 				continue;
-			if (code <= 0 || code > 0xfffffff)
+			if (code <= 0 || code > 0xffffffffff)
 				continue;
 			if (count < 0 || count > 2)
 				continue;
@@ -84,13 +84,10 @@ const std::unordered_map<int, int>* DeckManager::GetLFListContent(int lfhash) {
 }
 static int checkAvail(unsigned int ot, unsigned int avail) {
 	if((ot & avail) == avail)
-	std::cerr << "Error: 123" << std::endl;
 		return 0;
 	if((ot & AVAIL_OCG) && !(avail == AVAIL_OCG))
-	std::cerr << "Error: 1234" << std::endl;
 		return DECKERROR_OCGONLY;
 	if((ot & AVAIL_TCG) && !(avail == AVAIL_TCG))
-	std::cerr << "Error: 12345" << std::endl;
 		return DECKERROR_TCGONLY;
 	return DECKERROR_NOTAVAIL;
 }
@@ -177,7 +174,6 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_p
 	deck.clear();
 	int code;
 	int errorcode = 0;
-	std::cerr << "Llegue aqui" << std::endl;
 	CardData cd;
 	for(int i = 0; i < mainc; ++i) {
 		code = dbuf[i];
