@@ -238,8 +238,11 @@ bool DataManager::Error(spmemvfs_db_t* pDB, sqlite3_stmt* pStmt) {
 #endif //YGOPRO_SERVER_MODE
 bool DataManager::GetData(unsigned int code, CardData* pData) {
 	code_pointer cdit = _datas.find(code);
-	for (const auto& entry : _datas) {
-        const CardDataC& cd = entry.second;
+	if(cdit == _datas.end())
+	std::cerr << "No se encontró el código: " << code << std::endl;
+		return false;
+	auto& data = cdit->second;
+	const CardDataC& cd = entry.second;
         
         // Imprimir el código de la carta
         std::cerr << "Código de la carta (cd.code): " << cd.code << std::endl;
@@ -252,11 +255,6 @@ bool DataManager::GetData(unsigned int code, CardData* pData) {
         
         // Separador para cada entrada
         std::cerr << "---------------------------------------------" << std::endl;
-    }
-	if(cdit == _datas.end())
-	std::cerr << "No se encontró el código: " << code << std::endl;
-		return false;
-	auto& data = cdit->second;
 	if (pData) {
 		pData->code = data.code;
 		pData->alias = data.alias;
