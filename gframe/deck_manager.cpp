@@ -176,6 +176,7 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_p
 	int code;
 	int errorcode = 0;
 	CardData cd;
+	
 	for(int i = 0; i < mainc; ++i) {
 		code = dbuf[i];
 		std::cerr << "errores: " << code << " errocode: " << errorcode << std::endl;
