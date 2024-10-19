@@ -222,12 +222,8 @@ bool DataManager::GetData(unsigned int code, CardData* pData) {
 	if(cdit == _datas.end())
 		std::cerr << "No se encontró el código: " << code << std::endl;
         // Intentar imprimir el último elemento válido de _datas
-        if (!_datas.empty()) {
-            auto last_iter = std::prev(_datas.end());
-            std::cerr << "El último code en _datas es: " << last_iter->first << std::endl;
-        } else {
-            std::cerr << "_datas está vacío." << std::endl;
-        }
+        auto last_iter = std::prev(_datas.end());
+        std::cerr << "El último code en _datas es: " << last_iter->first << std::endl;
 		return false;
 	auto& data = cdit->second;
 	if (pData) {
