@@ -178,6 +178,7 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_p
 	CardData cd;
 	for(int i = 0; i < mainc; ++i) {
 		code = dbuf[i];
+		std::cerr << "errores: " << code << " errocode: " << errorcode << std::endl;
 		if(!dataManager.GetData(code, &cd)) {
 			errorcode = code;
 			continue;
@@ -199,7 +200,7 @@ int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_p
 				deck.main.push_back(dataManager.GetCodePointer(code));
 		}
 
-		std::cerr << "errores: " << code << " errocode: " << errorcode << std::endl;
+		 //std::cerr << "errores: " << code << " errocode: " << errorcode << std::endl;
 	}
 	for(int i = 0; i < sidec; ++i) {
 		code = dbuf[mainc + i];
