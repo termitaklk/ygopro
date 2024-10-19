@@ -220,15 +220,13 @@ bool DataManager::Error(spmemvfs_db_t* pDB, sqlite3_stmt* pStmt) {
 bool DataManager::GetData(unsigned int code, CardData* pData) {
 	code_pointer cdit = _datas.find(code);
 	if(cdit == _datas.end())
-	std::cerr << "No se encontró el código: " << code << std::endl;
-		return false;
-
 	// Imprimir el valor del iterador (clave y datos asociados)
     std::cerr << "Código encontrado: " << cdit->first << std::endl;
     std::cerr << "Alias: " << cdit->second.alias << std::endl;
     std::cerr << "Ataque: " << cdit->second.attack << ", Defensa: " << cdit->second.defense << std::endl;
     std::cerr << "Tipo: " << cdit->second.type << ", Nivel: " << cdit->second.level << std::endl;
-
+	std::cerr << "No se encontró el código: " << code << std::endl;
+		return false;
 	auto& data = cdit->second;
 	if (pData) {
 		pData->code = data.code;
