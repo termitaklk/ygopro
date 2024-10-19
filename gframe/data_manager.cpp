@@ -17,12 +17,6 @@ DataManager::DataManager() : _datas(16384), _strings(16384) {
 	strings_begin = _strings.begin();
 	strings_end = _strings.end();
 	extra_setcode = { {8512558u, {0x8f, 0x54, 0x59, 0x82, 0x13a}}, };
-
-	 // Imprimir todos los codes de _datas
-    std::cout << "Imprimiendo todos los codes de _datas:" << std::endl;
-    for (const auto& pair : _datas) {
-        std::cout << "Code: " << pair.first << std::endl;
-    }
 }
 bool DataManager::LoadDB(const wchar_t* wfile) {
 	char file[256];
@@ -226,8 +220,12 @@ bool DataManager::Error(spmemvfs_db_t* pDB, sqlite3_stmt* pStmt) {
 bool DataManager::GetData(unsigned int code, CardData* pData) {
 	code_pointer cdit = _datas.find(code);
 	if(cdit == _datas.end())
-	std::cerr << cdit->second << std::endl;
-	std::cerr << "No se encontró el código: " << code << std::endl;
+	auto cdit = _datas.find(code);
+	if (cdit == _datas.end()) {
+    	std::cerr << "El iterador cdit es igual a _datas.end() (el código no se encontró)." << std::endl;
+	} else {
+    	std::cerr << "El código se encontró, iterador no es _datas.end()" << std::endl;
+	}
 		return false;
 	auto& data = cdit->second;
 	if (pData) {
