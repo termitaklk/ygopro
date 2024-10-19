@@ -220,12 +220,14 @@ bool DataManager::Error(spmemvfs_db_t* pDB, sqlite3_stmt* pStmt) {
 bool DataManager::GetData(unsigned int code, CardData* pData) {
 	code_pointer cdit = _datas.find(code);
 	if(cdit == _datas.end())
-	auto cdit = _datas.find(code);
-	if (cdit == _datas.end()) {
-    	std::cerr << "El iterador cdit es igual a _datas.end() (el código no se encontró)." << std::endl;
-	} else {
-    	std::cerr << "El código se encontró, iterador no es _datas.end()" << std::endl;
-	}
+		std::cerr << "No se encontró el código: " << code << std::endl;
+        // Intentar imprimir el último elemento válido de _datas
+        if (!_datas.empty()) {
+            auto last_iter = std::prev(_datas.end());
+            std::cerr << "El último code en _datas es: " << last_iter->first << std::endl;
+        } else {
+            std::cerr << "_datas está vacío." << std::endl;
+        }
 		return false;
 	auto& data = cdit->second;
 	if (pData) {
