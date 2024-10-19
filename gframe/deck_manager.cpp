@@ -38,7 +38,7 @@ void DeckManager::LoadLFListSingle(const char* path) {
 			int count = -1;
 			if (sscanf(linebuf, "%d %d", &code, &count) != 2)
 				continue;
-			if (code <= 0 || code > 0xfffffff)
+			if (code <= 0 || code > 0xffffffffff)
 				continue;
 			if (count < 0 || count > 2)
 				continue;
@@ -46,7 +46,7 @@ void DeckManager::LoadLFListSingle(const char* path) {
 				continue;
 
 			// Agregamos un console log para mostrar el código y la cantidad procesados
-			std::cout << "Procesando cardId: " << code << " con cantidad: " << count << std::endl;
+			 std::cerr << "Procesando cardId: " << code << " con cantidad: " << count << std::endl;
 
 			unsigned int hcode = code;
 			cur->content[code] = count;
@@ -95,80 +95,79 @@ int DeckManager::CheckDeck(Deck& deck, int lfhash, int rule) {
 	std::unordered_map<int, int> ccount;
 	auto list = GetLFListContent(lfhash);
 	if(!list)
-		std::cout << "Error: Lista de limitaciones no encontrada." << std::endl;
+		std::cerr << "Error: Lista de limitaciones no encontrada." << std::endl;
 		return 0;
 	int dc = 0;
 	if((int)deck.main.size() < DECK_MIN_SIZE || (int)deck.main.size() > DECK_MAX_SIZE)
-		std::cout << "Error: Tamaño del mazo principal inválido: " << deck.main.size() << std::endl;
+		std::cerr << "Error: Tamaño del mazo principal inválido: " << deck.main.size() << std::endl;
 		return ((unsigned)DECKERROR_MAINCOUNT << 28) + deck.main.size();
 	if((int)deck.extra.size() > EXTRA_MAX_SIZE)
-		std::cout << "Error: Tamaño del mazo extra inválido: " << deck.extra.size() << std::endl;
+		std::cerr << "Error: Tamaño del mazo extra inválido: " << deck.extra.size() << std::endl;
 		return ((unsigned)DECKERROR_EXTRACOUNT << 28) + deck.extra.size();
 	if((int)deck.side.size() > SIDE_MAX_SIZE)
-		std::cout << "Error: Tamaño del mazo side inválido: " << deck.side.size() << std::endl;
+		std::cerr << "Error: Tamaño del mazo side inválido: " << deck.side.size() << std::endl;
 		return ((unsigned)DECKERROR_SIDECOUNT << 28) + deck.side.size();
 	if (rule < 0 || rule >= 6)
-		std::cout << "Error: Regla inválida." << std::endl;
+		std::cerr << "Error: Regla inválida." << std::endl;
 		return 0;
 	const unsigned int rule_map[6] = { AVAIL_OCG, AVAIL_TCG, AVAIL_SC, AVAIL_CUSTOM, AVAIL_OCGTCG, 0 };
 	auto avail = rule_map[rule];
 	for (auto& cit : deck.main) {
-		std::cout << "Verificando carta en el mazo principal, ID: " << cit->first << std::endl;
-
+    std::cerr << "Verificando carta en el mazo principal, ID: " << cit->first << std::endl;
 		int gameruleDeckError = checkAvail(cit->second.ot, avail);
 		if(gameruleDeckError)
-		    std::cout << "Error de regla de juego en el mazo principal, ID: " << cit->first << " Error: " << gameruleDeckError << std::endl;
+            std::cerr << "Error de regla de juego en el mazo principal, ID: " << cit->first << " Error: " << gameruleDeckError << std::endl;
 			return (gameruleDeckError << 28) + cit->first;
 		if (cit->second.type & (TYPES_EXTRA_DECK | TYPE_TOKEN))
-		    std::cout << "Error: Tipo de carta inválido para el mazo principal, ID: " << cit->first << std::endl;
+            std::cerr << "Error: Tipo de carta inválido para el mazo principal, ID: " << cit->first << std::endl;
 			return (DECKERROR_EXTRACOUNT << 28);
 		int code = cit->second.alias ? cit->second.alias : cit->first;
 		ccount[code]++;
 		dc = ccount[code];
 		if(dc > 3)
-		    std::cout << "Error: Exceso de copias de carta en el mazo principal, ID: " << cit->first << std::endl;
+		    std::cerr << "Error: Exceso de copias de carta en el mazo principal, ID: " << cit->first << std::endl;
 			return (DECKERROR_CARDCOUNT << 28) + cit->first;
 		auto it = list->find(code);
 		if(it != list->end() && dc > it->second)
-		    std::cout << "Error: Carta en la lista de limitaciones excedida en el mazo principal, ID: " << cit->first << std::endl;
+		    std::cerr << "Error: Carta en la lista de limitaciones excedida en el mazo principal, ID: " << cit->first << std::endl;
 			return (DECKERROR_LFLIST << 28) + cit->first;
 	}
 	for (auto& cit : deck.extra) {
-		std::cout << "Verificando carta en el mazo extra, ID: " << cit->first << std::endl;
+		std::cerr << "Verificando carta en el mazo extra, ID: " << cit->first << std::endl;
 
 		int gameruleDeckError = checkAvail(cit->second.ot, avail);
 		if(gameruleDeckError)
-		    std::cout << "Error de regla de juego en el mazo extra, ID: " << cit->first << " Error: " << gameruleDeckError << std::endl;
+		    std::cerr << "Error de regla de juego en el mazo extra, ID: " << cit->first << " Error: " << gameruleDeckError << std::endl;
 			return (gameruleDeckError << 28) + cit->first;
 		int code = cit->second.alias ? cit->second.alias : cit->first;
 		ccount[code]++;
 		dc = ccount[code];
 		if(dc > 3)
-		    std::cout << "Error: Exceso de copias de carta en el mazo extra, ID: " << cit->first << std::endl;
+		    std::cerr << "Error: Exceso de copias de carta en el mazo extra, ID: " << cit->first << std::endl;
 			return (DECKERROR_CARDCOUNT << 28) + cit->first;
 		auto it = list->find(code);
 		if(it != list->end() && dc > it->second)
-		    std::cout << "Error: Carta en la lista de limitaciones excedida en el mazo extra, ID: " << cit->first << std::endl;
+		    std::cerr << "Error: Carta en la lista de limitaciones excedida en el mazo extra, ID: " << cit->first << std::endl;
 			return (DECKERROR_LFLIST << 28) + cit->first;
 	}
 	for (auto& cit : deck.side) {
-		std::cout << "Verificando carta en el mazo side, ID: " << cit->first << std::endl;
+		std::cerr << "Verificando carta en el mazo side, ID: " << cit->first << std::endl;
 		int gameruleDeckError = checkAvail(cit->second.ot, avail);
 		if(gameruleDeckError)
-		    std::cout << "Error de regla de juego en el mazo side, ID: " << cit->first << " Error: " << gameruleDeckError << std::endl;
+		    std::cerr << "Error de regla de juego en el mazo side, ID: " << cit->first << " Error: " << gameruleDeckError << std::endl;
 			return (gameruleDeckError << 28) + cit->first;
 		int code = cit->second.alias ? cit->second.alias : cit->first;
 		ccount[code]++;
 		dc = ccount[code];
 		if(dc > 3)
-		    std::cout << "Error: Exceso de copias de carta en el mazo side, ID: " << cit->first << std::endl;
+		    std::cerr << "Error: Exceso de copias de carta en el mazo side, ID: " << cit->first << std::endl;
 			return (DECKERROR_CARDCOUNT << 28) + cit->first;
 		auto it = list->find(code);
 		if(it != list->end() && dc > it->second)
-		    std::cout << "Error: Carta en la lista de limitaciones excedida en el mazo side, ID: " << cit->first << std::endl;
+		    std::cerr << "Error: Carta en la lista de limitaciones excedida en el mazo side, ID: " << cit->first << std::endl;
 			return (DECKERROR_LFLIST << 28) + cit->first;
 	}
-	std::cout << "El mazo ha sido verificado sin errores." << std::endl;
+	std::cerr << "El mazo ha sido verificado sin errores." << std::endl;
 	return 0;
 }
 int DeckManager::LoadDeck(Deck& deck, int* dbuf, int mainc, int sidec, bool is_packlist) {
