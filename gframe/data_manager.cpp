@@ -223,12 +223,14 @@ bool DataManager::GetData(unsigned int code, CardData* pData) {
 	// Imprimir el valor del iterador (clave y datos asociados)
     std::cerr << "Código encontrado: " << cdit->first << std::endl;
     std::cerr << "Alias: " << cdit->second.alias << std::endl;
-    std::cerr << "Ataque: " << cdit->second.attack << ", Defensa: " << cdit->second.defense << std::endl;
-    std::cerr << "Tipo: " << cdit->second.type << ", Nivel: " << cdit->second.level << std::endl;
 	std::cerr << "No se encontró el código: " << code << std::endl;
 		return false;
 	auto& data = cdit->second;
 	if (pData) {
+		// Imprimir el valor del iterador (clave y datos asociados)
+    	std::cerr << "Código encontrado:1 " << cdit->first << std::endl;
+    	std::cerr << "Alias:1 " << cdit->second.alias << std::endl;
+		std::cerr << "No se encontró el código:1 " << code << std::endl;
 		pData->code = data.code;
 		pData->alias = data.alias;
 		std::memcpy(pData->setcode, data.setcode, SIZE_SETCODE);
