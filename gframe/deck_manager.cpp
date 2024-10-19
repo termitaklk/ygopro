@@ -84,10 +84,13 @@ const std::unordered_map<int, int>* DeckManager::GetLFListContent(int lfhash) {
 }
 static int checkAvail(unsigned int ot, unsigned int avail) {
 	if((ot & avail) == avail)
+	std::cerr << "Error: 123" << std::endl;
 		return 0;
 	if((ot & AVAIL_OCG) && !(avail == AVAIL_OCG))
+	std::cerr << "Error: 1234" << std::endl;
 		return DECKERROR_OCGONLY;
 	if((ot & AVAIL_TCG) && !(avail == AVAIL_TCG))
+	std::cerr << "Error: 12345" << std::endl;
 		return DECKERROR_TCGONLY;
 	return DECKERROR_NOTAVAIL;
 }
