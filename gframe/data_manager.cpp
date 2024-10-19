@@ -223,7 +223,6 @@ bool DataManager::GetData(unsigned int code, CardData* pData) {
 	std::cerr << "No se encontró el código: " << code << std::endl;
 		return false;
 	auto& data = cdit->second;
-	std::cerr << "No se encontró el código123: " << data << std::endl;
 	if (pData) {
 		pData->code = data.code;
 		pData->alias = data.alias;
