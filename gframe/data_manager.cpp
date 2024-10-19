@@ -219,7 +219,7 @@ bool DataManager::Error(spmemvfs_db_t* pDB, sqlite3_stmt* pStmt) {
 #endif //YGOPRO_SERVER_MODE
 bool DataManager::GetData(unsigned int code, CardData* pData) {
 	code_pointer cdit = _datas.find(code);
-	std::cerr << "errores: " << cdit << " errocode: " << std::endl;
+	std::cerr << "errores: " << cdit << std::endl;
 	if(cdit == _datas.end())
 		return false;
 	auto& data = cdit->second;
