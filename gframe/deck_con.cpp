@@ -1411,7 +1411,6 @@ void DeckBuilder::FilterCards() {
 	for(code_pointer ptr = dataManager.datas_begin; ptr != dataManager.datas_end; ++ptr) {
 		const CardDataC& data = ptr->second;
 		auto strpointer = dataManager.GetStringPointer(ptr->first);
-		std::cerr << "Llegue al deck" << std::endl;
 		if (strpointer == dataManager.strings_end)
 			continue;
 		const CardString& text = strpointer->second;

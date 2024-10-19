@@ -18,6 +18,55 @@ DataManager::DataManager() : _datas(16384), _strings(16384) {
 	strings_end = _strings.end();
 	extra_setcode = { {8512558u, {0x8f, 0x54, 0x59, 0x82, 0x13a}}, };
 }
+
+void DataManager::PrintLoadedData() const {
+    for (const auto& entry : _datas) {
+        const CardDataC& cd = entry.second;
+        
+        // Imprimir el código de la carta
+        std::cout << "Código de la carta: " << cd.code << std::endl;
+
+        // Imprimir alias de la carta
+        std::cout << "Alias: " << cd.alias << std::endl;
+
+        // Imprimir OT de la carta
+        std::cout << "OT: " << cd.ot << std::endl;
+
+        // Imprimir setcode de la carta (código del conjunto)
+        std::cout << "Setcode: ";
+        for (int i = 0; i < SIZE_SETCODE; ++i) {
+            std::cout << cd.setcode[i] << " ";
+        }
+        std::cout << std::endl;
+
+        // Imprimir el tipo de la carta
+        std::cout << "Tipo: " << cd.type << std::endl;
+
+        // Imprimir el ataque de la carta
+        std::cout << "Ataque: " << cd.attack << std::endl;
+
+        // Imprimir la defensa de la carta
+        std::cout << "Defensa: " << cd.defense << std::endl;
+
+        // Imprimir nivel, escalas y link markers
+        std::cout << "Nivel: " << cd.level << std::endl;
+        std::cout << "LScale: " << cd.lscale << std::endl;
+        std::cout << "RScale: " << cd.rscale << std::endl;
+        std::cout << "Link Marker: " << cd.link_marker << std::endl;
+
+        // Imprimir raza de la carta
+        std::cout << "Raza: " << cd.race << std::endl;
+
+        // Imprimir atributo de la carta
+        std::cout << "Atributo: " << cd.attribute << std::endl;
+
+        // Imprimir categoría de la carta
+        std::cout << "Categoría: " << cd.category << std::endl;
+
+        std::cout << "---------------------------------------------" << std::endl;
+    }
+}
+
 bool DataManager::LoadDB(const wchar_t* wfile) {
 	char file[256];
 	BufferIO::EncodeUTF8(wfile, file);
